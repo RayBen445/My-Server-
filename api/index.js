@@ -6,7 +6,6 @@ import { GoogleGenAI } from '@google/genai';
 
 // --- SETUP ---
 const app = express();
-
 const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
 // --- MIDDLEWARE ---
@@ -102,8 +101,7 @@ app.post('/v1/cool-shot/analyze-image', upload.single('image'), async (req, res)
 });
 
 
-// --- VIDEO GENERATION ROUTES ---
-// This stateless approach is required for serverless environments like Vercel.
+// --- VIDEO GENERATION ROUTES (STATELESS for Vercel) ---
 
 // 1. Start video generation
 app.post('/v1/cool-shot/generate-video', async (req, res) => {
@@ -122,7 +120,7 @@ app.post('/v1/cool-shot/generate-video', async (req, res) => {
         });
         
         console.log(`[Video Gen] Operation started: ${operation.name}`);
-        res.status(202).json({ operation }); // 202 Accepted
+        res.status(202).json({ operation }); // 202 Accepted, return the operation object
     } catch (error) {
         console.error('[Video Gen] Error:', error);
         res.status(500).json({ error: `Failed to start video generation. ${error.message}` });
@@ -163,6 +161,5 @@ app.post('/v1/cool-shot/video-status', async (req, res) => {
     }
 });
 
-
-// Export the Express API for Vercel
+// Export the app for Vercel
 export default app;

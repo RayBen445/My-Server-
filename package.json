@@ -1,3 +1,4 @@
+
 {
   "name": "cool-shot-systems-api",
   "version": "1.0.0",
@@ -5,8 +6,7 @@
   "main": "api/index.js",
   "type": "module",
   "scripts": {
-    "start": "vercel dev",
-    "build": "echo 'No build step required for static frontend.'"
+    "build": "echo 'No build required'"
   },
   "dependencies": {
     "@google/genai": "^0.15.0",
