@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import ReactDOM from 'react-dom/client';
 
@@ -19,7 +20,7 @@ const apiTemplates = [
     description: 'Condenses long text into key bullet points.',
     promptPrefix: 'Summarize the following text in five key bullet points: ',
     placeholder: 'Enter a long article or text to summarize...',
-    endpoint: '/v1/text-prompt',
+    endpoint: '/v1/cool-shot/text-prompt',
     type: 'text',
     model: 'gemini-2.5-flash'
   },
@@ -28,7 +29,7 @@ const apiTemplates = [
     description: 'Translates English to any specified language.',
     promptPrefix: 'Translate the following English text to ', // The language will be added from the prompt
     placeholder: 'Specify the language, then the text. E.g.,\nFrench: The book is on the table.\nJapanese: How are you?',
-    endpoint: '/v1/text-prompt',
+    endpoint: '/v1/cool-shot/text-prompt',
     type: 'text',
     model: 'gemini-2.5-flash'
   },
@@ -37,7 +38,7 @@ const apiTemplates = [
     description: 'Creates a high-quality image from a text description.',
     promptPrefix: '', // The user prompt is used directly for image generation
     placeholder: 'A photorealistic image of a cat wearing a tiny top hat...',
-    endpoint: '/v1/generate-image',
+    endpoint: '/v1/cool-shot/generate-image',
     type: 'image',
     model: 'imagen-3.0-generate-002'
   },
@@ -46,7 +47,7 @@ const apiTemplates = [
     description: 'Creates a short video clip from a text description. (May take a few minutes)',
     promptPrefix: '',
     placeholder: 'A cinematic shot of a futuristic city at night, with flying cars...',
-    endpoint: '/v1/generate-video',
+    endpoint: '/v1/cool-shot/generate-video',
     type: 'video',
     model: 'veo-2.0-generate-001'
   },
@@ -55,7 +56,7 @@ const apiTemplates = [
     description: 'Describes an image or answers questions about it.',
     promptPrefix: '', // Will be handled in the prompt logic
     placeholder: 'Optional: Ask a question about the image (e.g., "What color is the car?"). Leave blank for a general description.',
-    endpoint: '/v1/analyze-image',
+    endpoint: '/v1/cool-shot/analyze-image',
     type: 'image-to-text',
     model: 'gemini-2.5-flash'
   },
@@ -82,7 +83,7 @@ const apiTemplates = [
     description: 'Generates a detailed description of a musical piece from a prompt.',
     promptPrefix: 'Describe a musical piece in detail based on this prompt: ',
     placeholder: 'e.g., "A fast-paced electronic track for a car chase scene"...',
-    endpoint: '/v1/text-prompt',
+    endpoint: '/v1/cool-shot/text-prompt',
     type: 'text',
     model: 'gemini-2.5-flash'
   },
@@ -91,7 +92,7 @@ const apiTemplates = [
     description: 'Creates a textual description of a requested sound effect.',
     promptPrefix: 'Describe the sound of: ',
     placeholder: 'e.g., "A magical spell being cast"...',
-    endpoint: '/v1/text-prompt',
+    endpoint: '/v1/cool-shot/text-prompt',
     type: 'text',
     model: 'gemini-2.5-flash'
   },
@@ -100,7 +101,7 @@ const apiTemplates = [
     description: 'Provides a weather forecast for a specified location.',
     promptPrefix: 'Provide a simple weather forecast for the following location: ',
     placeholder: 'Enter a city name, e.g., London, UK...',
-    endpoint: '/v1/text-prompt',
+    endpoint: '/v1/cool-shot/text-prompt',
     type: 'text',
     model: 'gemini-2.5-flash'
   },
@@ -109,7 +110,7 @@ const apiTemplates = [
     description: 'Generates a recipe based on ingredients you have.',
     promptPrefix: 'Create a simple recipe using the following ingredients: ',
     placeholder: 'List your ingredients, e.g., chicken, rice, broccoli, soy sauce...',
-    endpoint: '/v1/text-prompt',
+    endpoint: '/v1/cool-shot/text-prompt',
     type: 'text',
     model: 'gemini-2.5-flash'
   },
@@ -118,7 +119,7 @@ const apiTemplates = [
     description: 'Drafts a professional email for a specific purpose.',
     promptPrefix: 'Write a professional email for the following situation: ',
     placeholder: 'e.g., "An email to my boss requesting a day off next Friday"...',
-    endpoint: '/v1/text-prompt',
+    endpoint: '/v1/cool-shot/text-prompt',
     type: 'text',
     model: 'gemini-2.5-flash'
   },
@@ -127,7 +128,7 @@ const apiTemplates = [
     description: 'Finds and suggests fixes for bugs in code snippets.',
     promptPrefix: 'Debug the following code snippet and explain the issue and the fix: ',
     placeholder: 'Paste a piece of code that has a bug...',
-    endpoint: '/v1/text-prompt',
+    endpoint: '/v1/cool-shot/text-prompt',
     type: 'text',
     model: 'gemini-2.5-flash'
   },
@@ -136,7 +137,7 @@ const apiTemplates = [
     description: 'Explains a snippet of code in plain English.',
     promptPrefix: 'Explain the following code snippet line by line: ',
     placeholder: 'Enter a piece of code to explain...',
-    endpoint: '/v1/text-prompt',
+    endpoint: '/v1/cool-shot/text-prompt',
     type: 'text',
     model: 'gemini-2.5-flash'
   },
@@ -145,7 +146,7 @@ const apiTemplates = [
     description: 'A helpful assistant to answer your questions.',
     promptPrefix: 'You are a helpful assistant. The user says: ',
     placeholder: 'Ask me anything...',
-    endpoint: '/v1/text-prompt',
+    endpoint: '/v1/cool-shot/text-prompt',
     type: 'text',
     model: 'gemini-2.5-flash'
   },
@@ -154,7 +155,7 @@ const apiTemplates = [
     description: 'Generates creative names for a product concept.',
     promptPrefix: 'Generate 10 creative and catchy names for a product described as: ',
     placeholder: 'Describe your product (e.g., a smart coffee mug)...',
-    endpoint: '/v1/text-prompt',
+    endpoint: '/v1/cool-shot/text-prompt',
     type: 'text',
     model: 'gemini-2.5-flash'
   },
@@ -163,7 +164,7 @@ const apiTemplates = [
     description: 'Pulls structured data from unstructured text.',
     promptPrefix: 'Extract the key information from the following text and return it as a valid JSON object with keys for "name", "email", and "company": ',
     placeholder: 'Enter text containing contact info, e.g., "John Doe works at ExampleCorp and his email is john@example.com"...',
-    endpoint: '/v1/text-prompt',
+    endpoint: '/v1/cool-shot/text-prompt',
     type: 'text',
     model: 'gemini-2.5-flash'
   },
@@ -172,7 +173,7 @@ const apiTemplates = [
     description: 'Determines if text is Positive, Negative, or Neutral.',
     promptPrefix: 'Analyze the sentiment of the following text and respond with only "Positive", "Negative", or "Neutral": ',
     placeholder: 'Enter text to analyze, e.g., "This new feature is amazing!"...',
-    endpoint: '/v1/text-prompt',
+    endpoint: '/v1/cool-shot/text-prompt',
     type: 'text',
     model: 'gemini-2.5-flash'
   },
@@ -181,7 +182,7 @@ const apiTemplates = [
     description: 'Generates a short story from a creative prompt.',
     promptPrefix: 'Write a short story (around 200 words) based on this idea: ',
     placeholder: 'Enter a story prompt, e.g., "A robot who discovers music for the first time"...',
-    endpoint: '/v1/text-prompt',
+    endpoint: '/v1/cool-shot/text-prompt',
     type: 'text',
     model: 'gemini-2.5-flash'
   },
@@ -190,7 +191,7 @@ const apiTemplates = [
     description: 'Finds the lyrics for a song given the title and artist.',
     promptPrefix: 'Find the full lyrics for the song titled ',
     placeholder: 'Enter song title and artist, e.g., "Bohemian Rhapsody by Queen"...',
-    endpoint: '/v1/text-prompt',
+    endpoint: '/v1/cool-shot/text-prompt',
     type: 'text',
     model: 'gemini-2.5-flash'
   },
@@ -199,7 +200,7 @@ const apiTemplates = [
     description: 'Creates a strong, random password based on your criteria.',
     promptPrefix: 'Generate a secure, random password that meets the following criteria: ',
     placeholder: 'e.g., "16 characters long, including uppercase letters, numbers, and symbols"...',
-    endpoint: '/v1/text-prompt',
+    endpoint: '/v1/cool-shot/text-prompt',
     type: 'text',
     model: 'gemini-2.5-flash'
   },
@@ -208,7 +209,7 @@ const apiTemplates = [
     description: 'Extracts title, artist, and a summary from a YouTube link. (Does not download video/audio).',
     promptPrefix: 'From the content of the YouTube link provided, extract the song title, artist, and a brief summary of the video: ',
     placeholder: 'Enter a YouTube URL, e.g., https://www.youtube.com/watch?v=...',
-    endpoint: '/v1/text-prompt',
+    endpoint: '/v1/cool-shot/text-prompt',
     type: 'text',
     model: 'gemini-2.5-flash'
   },
@@ -217,7 +218,7 @@ const apiTemplates = [
     description: 'Composes a musical description for a song based on its lyrics.',
     promptPrefix: 'Compose a detailed musical description (including genre, tempo, instruments, and mood) for a song with the following lyrics: ',
     placeholder: 'Enter song lyrics here...',
-    endpoint: '/v1/text-prompt',
+    endpoint: '/v1/cool-shot/text-prompt',
     type: 'text',
     model: 'gemini-2.5-flash'
   },
@@ -226,7 +227,7 @@ const apiTemplates = [
     description: 'Generates a music video concept from song lyrics. (May take a few minutes)',
     promptPrefix: 'Create a music video based on the following lyrics: ',
     placeholder: 'Enter song lyrics to generate a video...',
-    endpoint: '/v1/generate-video',
+    endpoint: '/v1/cool-shot/generate-video',
     type: 'video',
     model: 'veo-2.0-generate-001'
   }
@@ -377,6 +378,7 @@ const App: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [isCopied, setIsCopied] = useState(false);
+  const [isUrlCopied, setIsUrlCopied] = useState(false);
   const [liveRequestDetails, setLiveRequestDetails] = useState<LiveRequest | null>(null);
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
@@ -461,7 +463,7 @@ const App: React.FC = () => {
     setApiStatuses(prev => ({ ...prev, [apiKey]: { status: 'checking' } }));
     
     const startTime = Date.now();
-    fetch(`${SERVER_URL}/v1/health-check`)
+    fetch(`${SERVER_URL}/v1/cool-shot/health-check`)
       .then(res => {
         const latency = Date.now() - startTime;
         if (res.ok) {
@@ -568,7 +570,7 @@ const App: React.FC = () => {
       }
 
       try {
-        const res = await fetch(`${SERVER_URL}/v1/video-status`, {
+        const res = await fetch(`${SERVER_URL}/v1/cool-shot/video-status`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ operation: currentOperation }),
@@ -708,11 +710,22 @@ const App: React.FC = () => {
     }
   };
 
+  const codeSnippet = generateCodeSnippet(selectedApi);
+  const apiUrl = selectedApi ? `${window.location.origin}${selectedApi.endpoint}` : '';
+
   const handleCopyCode = () => {
     if (!selectedApi) return;
     navigator.clipboard.writeText(codeSnippet).then(() => {
         setIsCopied(true);
         setTimeout(() => setIsCopied(false), 2000);
+    });
+  };
+
+  const handleCopyUrl = () => {
+    if (!apiUrl) return;
+    navigator.clipboard.writeText(apiUrl).then(() => {
+        setIsUrlCopied(true);
+        setTimeout(() => setIsUrlCopied(false), 2000);
     });
   };
   
@@ -729,8 +742,6 @@ const App: React.FC = () => {
 
   const isApiSelected = !!selectedApi;
   const currentStatus = selectedApi ? apiStatuses[selectedApi.id].status : 'idle';
-  const codeSnippet = generateCodeSnippet(selectedApi);
-  const apiUrl = selectedApi ? `${window.location.origin}${selectedApi.endpoint}` : '';
   const apiTypes: (ApiOption['type'] | 'all')[] = ['all', 'text', 'image', 'video', 'audio', 'image-to-text'];
 
   return (
@@ -867,7 +878,12 @@ const App: React.FC = () => {
                 </p>
                 <div className="api-detail">
                   <label htmlFor="apiUrl">API Endpoint URL</label>
-                  <input type="text" id="apiUrl" value={apiUrl} readOnly aria-label="Simulated API Endpoint URL"/>
+                  <div className="input-with-button">
+                    <input type="text" id="apiUrl" value={apiUrl} readOnly aria-label="API Endpoint URL"/>
+                    <button onClick={handleCopyUrl} className="copy-url-btn" aria-label="Copy API Endpoint URL">
+                        {isUrlCopied ? 'Copied!' : 'Copy'}
+                    </button>
+                  </div>
                 </div>
                 <div className="api-detail code-snippet-container">
                   <label>Example Code Snippet (JavaScript)</label>

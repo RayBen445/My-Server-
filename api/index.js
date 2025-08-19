@@ -1,3 +1,4 @@
+
 import express from 'express';
 import cors from 'cors';
 import multer from 'multer';
@@ -14,14 +15,14 @@ app.use(express.json({ limit: '10mb' })); // Increase payload limit for base64 i
 const upload = multer({ storage: multer.memoryStorage() }); // For handling file uploads in memory
 
 // --- HEALTH CHECK ---
-app.get('/v1/health-check', (req, res) => {
+app.get('/v1/cool-shot/health-check', (req, res) => {
   res.status(200).json({ status: 'ok' });
 });
 
 // --- API ROUTES ---
 
 // Generic handler for all text-based prompts
-app.post('/v1/text-prompt', async (req, res) => {
+app.post('/v1/cool-shot/text-prompt', async (req, res) => {
   if (!process.env.API_KEY) return res.status(500).json({ error: 'API_KEY not configured on server.' });
   const { model, fullPrompt } = req.body;
   if (!model || !fullPrompt) {
@@ -43,7 +44,7 @@ app.post('/v1/text-prompt', async (req, res) => {
 });
 
 // Handler for image generation
-app.post('/v1/generate-image', async (req, res) => {
+app.post('/v1/cool-shot/generate-image', async (req, res) => {
   if (!process.env.API_KEY) return res.status(500).json({ error: 'API_KEY not configured on server.' });
   const { model, prompt } = req.body;
   if (!model || !prompt) {
@@ -68,7 +69,7 @@ app.post('/v1/generate-image', async (req, res) => {
 });
 
 // Handler for analyzing uploaded images
-app.post('/v1/analyze-image', upload.single('image'), async (req, res) => {
+app.post('/v1/cool-shot/analyze-image', upload.single('image'), async (req, res) => {
     if (!process.env.API_KEY) return res.status(500).json({ error: 'API_KEY not configured on server.' });
     const { model, prompt } = req.body;
     const imageFile = req.file;
@@ -105,7 +106,7 @@ app.post('/v1/analyze-image', upload.single('image'), async (req, res) => {
 // This stateless approach is required for serverless environments like Vercel.
 
 // 1. Start video generation
-app.post('/v1/generate-video', async (req, res) => {
+app.post('/v1/cool-shot/generate-video', async (req, res) => {
     if (!process.env.API_KEY) return res.status(500).json({ error: 'API_KEY not configured on server.' });
     const { model, prompt } = req.body;
     if (!model || !prompt) {
@@ -129,7 +130,7 @@ app.post('/v1/generate-video', async (req, res) => {
 });
 
 // 2. Poll for video status
-app.post('/v1/video-status', async (req, res) => {
+app.post('/v1/cool-shot/video-status', async (req, res) => {
     if (!process.env.API_KEY) return res.status(500).json({ error: 'API_KEY not configured on server.' });
     let { operation } = req.body;
 

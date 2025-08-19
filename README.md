@@ -1,8 +1,11 @@
+
 # Cool Shot Systems API for Vercel
 
 This project contains a Node.js backend (as a Vercel Serverless Function) and a React frontend to create and serve a real API powered by the Google Gemini models.
 
 This project is configured for one-click deployment on Vercel.
+
+**IMPORTANT:** Before deploying, you MUST delete the old `frontend` and `backend` directories from your project if they exist.
 
 ---
 
@@ -24,9 +27,9 @@ Vercel will handle the rest. It will serve the frontend from the root directory 
 
 ### How It Works
 
-*   **Frontend:** The React application in the root directory is served as a static site. It makes API calls to relative paths (e.g., `/v1/generate-image`).
+*   **Frontend:** The React application in the root directory is served as a static site. It makes API calls to relative paths (e.g., `/v1/cool-shot/generate-image`).
 *   **Backend:** The code in the `/api` directory is deployed as a Vercel Serverless Function. It's an Express server that handles all incoming API requests.
-*   **Routing:** Vercel's configuration (`vercel.json`) rewrites all requests from `/v1/*` to the serverless function, which then processes them. This keeps your `API_KEY` secure on the server-side.
+*   **Routing:** Vercel's configuration (`vercel.json`) rewrites all requests from `/v1/cool-shot/*` to the serverless function, which then processes them. This keeps your `API_KEY` secure on the server-side.
 
 ---
 
