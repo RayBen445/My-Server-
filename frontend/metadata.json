@@ -1,8 +1,0 @@
-
-{
-  "name": "Full-Stack AI API Server",
-  "description": "A full-stack application with a React frontend and Node.js backend that uses Google Gemini.",
-  "requestFramePermissions": [
-    "microphone"
-  ]
-}
